@@ -1,0 +1,23 @@
+# Restart wifi 
+ctrl + alt + space 
+	nmcli radio wifi off ; nmcli radio wifi on
+
+XF86AudioRaiseVolume
+	volume up
+
+XF86AudioLowerVolume
+	volume down
+
+XF86AudioMute
+	volume mute
+	
+XF86MonBrightnessDown
+	light -U 5 
+
+XF86MonBrightnessUp
+	light -A 5
+ 
+
+XF86Sleep
+	systemctl suspend
+
