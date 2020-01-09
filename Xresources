@@ -1,0 +1,52 @@
+URxvt.scrollBar:              false
+URxvt.font:			              xft:mononoki:regular:size=16
+URxvt.internalBorder:		      15
+
+URxvt.perl-ext-common:        default,matcher,resize-font,url-select,keyboard-select
+
+URxvt.url-select-launcher:    firefox
+URxvt.url-select-underline:   true
+URxvt.colorUL:                #80d3f9
+
+URxvt.keysym.M-u:             perl:url-select:select_next
+URxvt.keysym.M-o:             perl:keyboard-select:activate
+
+! Color Scheme !
+
+! special
+*.foreground:   #eceff1
+*.background:   #31313a
+*.cursorColor:  #eceff1
+
+! black
+*.color0:       #263238
+*.color8:       #919191
+
+! red
+*.color1:       #ff9800
+*.color9:       #ED973F
+
+! green
+*.color2:       #8bc34a
+*.color10:      #9ccc65
+
+! yellow
+*.color3:       #ffc107
+*.color11:      #ffa000
+
+! blue
+*.color4:       #03a9f4
+*.color12:      #81d4fa
+
+! magenta
+*.color5:       #FF5A92
+*.color13:      #EF5B9C
+
+! cyan
+*.color6:       #009688
+*.color14:      #26a69a
+
+! white
+*.color7:       #cfd8dc
+*.color15:      #eceff1
+
