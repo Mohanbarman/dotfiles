@@ -1,0 +1,15 @@
+#!/bin/python
+import os
+from time import sleep
+
+while True:
+  with open('/sys/class/power_supply/BAT0/capacity', 'r') as c:
+    with open('/sys/class/power_supply/BAT0/status', 'r') as s:
+      capacity = int(c.read().strip())
+      status = s.read().strip()
+
+  if (status == 'Charging') and (capacity >= 95):
+    os.system('notify-send "Remove the charger."')
+  elif (status == 'Discharging') and (capacity <= 30):
+    os.system('notify-send "Plug in charger."')
+  sleep(60)

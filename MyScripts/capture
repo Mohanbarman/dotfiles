@@ -1,0 +1,5 @@
+#!/bin/bash
+
+name="$(date +'%d-%m-%y-%k%M%S')"-import.jpg
+
+import /home/mohan/Screenshots/$name
