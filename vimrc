@@ -20,5 +20,5 @@ map <C-x> <Esc>:wq<CR>
 
 let mapleader=","
 
-autocmd filetype c map <leader>c <Esc>:w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype cpp map <leader>c <Esc>:w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype c map <leader>c <Esc>:w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && clear; ./'.shellescape('%:r')<CR>
+autocmd filetype cpp map <leader>c <Esc>:w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && clear; ./'.shellescape('%:r')<CR>
