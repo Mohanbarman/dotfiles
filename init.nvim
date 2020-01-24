@@ -1,0 +1,19 @@
+" *********** | Load vimrc | ****************** "
+
+source ~/.vimrc
+
+" ****** | overwrite some keybindings | ******* "
+
+"  Run programs in new pane "
+
+autocmd filetype c nmap <leader>c :w <CR> :!(gcc -o %:r %) && (./%:r ; rm %:r) <CR>
+autocmd filetype cpp nmap <leader>c :w <CR> :!(g++ -o %:r %) && (./%:r ; rm %:r) <CR>
+autocmd filetype python nmap <leader>c :w <CR> :!python % <CR>
+autocmd filetype javascript nmap <leader>c :w <CR> :!node % <CR>
+
+" Run programs in terminal "
+
+autocmd filetype c nmap <leader>z :w <CR> :terminal (gcc -o %:r %) && (./%:r ; rm ./%:r) <CR>i
+autocmd filetype cpp nmap <leader>z :w <CR> :terminal (g++ -o %:r %) && (./%:r ; rm ./%:r) <CR>i
+autocmd filetype python nmap <leader>z :w <CR> :terminal python % <CR>i
+autocmd filetype javascript nmap <leader>z :w <CR> :terminal node % <CR>i
