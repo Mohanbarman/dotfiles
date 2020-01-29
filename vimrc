@@ -12,6 +12,8 @@ set autoindent
 set nohlsearch
 set backspace=indent,eol,start
 set runtimepath^=~/.vim 
+set splitbelow
+set splitright
 let &packpath=&runtimepath
 
 " *******************************| Vundle |***************************** "
@@ -24,6 +26,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()            
 filetype plugin indent on    
@@ -46,6 +50,22 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" Function for show documentation "
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Remap for rename current word
+nmap <leader>s <Plug>(coc-rename)
+
+
 " ****************************| Theme |********************************* "
 
 colorscheme palenight
@@ -56,12 +76,16 @@ set noshowmode
 let g:lightline = { 'colorscheme': 'palenight' }
 let g:palenight_terminal_italics = 1
 
+" transparent background for vim 
+hi Normal guibg=NONE ctermbg=NONE
+
 " ******************************| Mappings |**************************** "
 
 noremap <C-w>+ :resize +5<CR>
 noremap <C-w>- :resize -5<CR>
-noremap <C-w>h :vertical:resize -5<CR>
-noremap <C-w>l :vertical:resize +5<CR>
+
+nmap <C-l> :tabn<CR>
+nmap <C-h> :tabp<CR>
 
 " ************************| Leader key mappings |*********************** "
 
