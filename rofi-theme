@@ -1,0 +1,39 @@
+* {
+    background-color:      #292d3e;
+    border-color:          White;
+    text-color:           White;
+    font:            "Times New Roman 11";
+}
+
+#window {
+    anchor:     north;
+    location:   north;
+    width:      100%;
+    children:   [ horibox ];
+}
+
+#horibox {
+    orientation: horizontal;
+    children:   [ prompt, entry, listview ];
+}
+
+#listview {
+    layout:     horizontal;
+    spacing:    10px;
+    lines:      100;
+}
+
+#entry {
+    expand:     false;
+    width:      20em;
+    padding:    8px;
+}
+
+#element {
+    padding: 8px;
+}
+#element selected {
+    background-color: #34d798;
+    color: #292d3e;
+    font:  "Times New Roman bold 11";
+}
