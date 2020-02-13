@@ -1,8 +1,8 @@
 * {
-    background-color:      #292d3e;
-    border-color:          White;
-    text-color:           White;
-    font:            "Times New Roman 11";
+    background-color: #282a36;
+    border-color:     White;
+    text-color:       White;
+    font:             "Times New Roman 11";
 }
 
 #window {
@@ -26,14 +26,14 @@
 #entry {
     expand:     false;
     width:      20em;
-    padding:    8px;
+    padding:    7px;
 }
 
 #element {
     padding: 8px;
 }
 #element selected {
-    background-color: #34d798;
+    background-color: #31dab9;
     color: #292d3e;
     font:  "Times New Roman bold 11";
 }
