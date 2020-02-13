@@ -1,11 +1,11 @@
 [options]
-font = mononoki 17
+font = Fantasque Sans Mono 17
 allow_bold = true
 #audible_bell = false
 bold_is_bright = true
-#cell_height_scale = 1.0
+cell_height_scale = 1.21
 #cell_width_scale = 1.0
-#clickable_url = true
+clickable_url = true
 #dynamic_title = true
 #fullscreen = true
 #icon_name = terminal
@@ -26,7 +26,7 @@ scrollback_lines = 10000
 cursor_blink = system
 
 # "block", "underline" or "ibeam"
-cursor_shape = underline
+cursor_shape = block
 
 # Hide links that are no longer valid in url select overlay mode
 #filter_unmatched_urls = true
@@ -41,45 +41,44 @@ cursor_shape = underline
 #scrollbar = off
 roundness = 2.0
 
-
 [colors]
 
 # special
-foreground      = #d0d0d0
-foreground_bold = #d0d0d0
-cursor          = #d0d0d0
-background      = #333147
-
+foreground      = #f8f8f2
+foreground_bold = #f8f8f2
+cursor          = #ffffff
+background      = #282a36
 
 # black
-color0  = #1c2023
-color8  = #747c84
+color0  = #000000
+color8  = #4d4d4d
 
 # red
-color1  = #c7ae95
-color9  = #c7ae95
+color1  = #ff5555
+color9  = #ff6e67
 
 # green
-color2  = #95c7ae
-color10 = #95c7ae
+color2  = #31dab9
+color10 = #31dab9
 
 # yellow
-color3  = #aec795
-color11 = #aec795
+color3  = #DCBA4A
+color11 = #DCBA4A
 
 # blue
-color4  = #ae95c7
-color12 = #ae95c7
+color4  = #82b1ff
+color12 = #82b1ff
 
 # magenta
-color5  = #c795ae
-color13 = #c795ae
+color5  = #ff79c6
+color13 = #ff92d0
 
 # cyan
-color6  = #95aec7
-color14 = #95aec7
+color6  = #75CDD3
+color14 = #75CDD3
 
 # white
-color7  = #c7ccd1
-color15 = #f3f4f5
+color7  = #bfbfbf
+color15 = #e6e6e6
+
 
