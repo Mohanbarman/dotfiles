@@ -5,29 +5,32 @@ set number
 set is
 set ic
 set tabstop=2
+set nowrap
 set shiftwidth=2
 set expandtab
-set nowrap
 set autoindent
 set nohlsearch
 set backspace=indent,eol,start
 set runtimepath^=~/.vim 
 set splitbelow
 set splitright
+set exrc
 let &packpath=&runtimepath
+let &path.="/usr/include/AL,"
 
 " *******************************| Vundle |***************************** "
 
 call plug#begin()
 
-Plug 'wadackel/vim-dogrun'
 Plug 'sheerun/vim-polyglot'
-Plug 'joshdick/onedark.vim'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jiangmiao/auto-pairs'
+
+" Color schemes
+Plug 'dracula/vim'
+Plug 'joshdick/onedark.vim'
+Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()            
 filetype plugin indent on    
@@ -65,6 +68,8 @@ endfunction
 " Remap for rename current word
 nmap <leader>s <Plug>(coc-rename)
 
+" Enter to complete the completion
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " ****************************| Theme |********************************* "
 
@@ -79,24 +84,54 @@ let g:palenight_terminal_italics = 1
 " transparent background for vim 
 hi Normal guibg=NONE ctermbg=NONE
 
+" autocompletion theme
+hi Pmenu guibg=#2e323e
+hi PmenuSel guibg=#34d798 guifg=#282a36
+hi PmenuSbar guibg=#2e323e guifg=#2e323e
+hi PmenuThumb guibg=#3e4452 guifg=#352B59
+
 " ******************************| Mappings |**************************** "
 
+" Resize horizontal panes.
 noremap <C-w>+ :resize +5<CR>
 noremap <C-w>- :resize -5<CR>
 
-nmap <C-l> :tabn<CR>
-nmap <C-h> :tabp<CR>
+" Next tab
+nmap <C-p> :tabn<CR>
 
-" ************************| Leader key mappings |*********************** "
+" focus panes
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+
+" Scrolling
+nmap <A-j> <C-e>
+nmap <A-k> <C-y>
+
+vmap <A-j> <C-e>
+vmap <A-k> <C-y>
+
+" Save file
+nmap <C-s> :w<CR>
+" Save and exit
+nmap <C-x> :x<CR>
+
+nnoremap <C-q> :q!<CR>
+
+" |*| Leader key mappings |*| "
 
 let mapleader=","
 
-autocmd filetype c nmap <leader>c :w <CR> :!(clear ; gcc -o %:r %) && (clear ; ./%:r ; rm ./%:r) <CR>
-autocmd filetype cpp nmap <leader>c :w <CR> :!(clear ; g++ -o %:r %) && (clear ; ./%:r ; rm ./%:r) <CR>
-autocmd filetype python nmap <leader>c :w <CR> :!clear; python % <CR>
-autocmd filetype javascript nmap <leader>c :w <CR> :!clear; node % <CR>
+autocmd filetype c nmap <leader>z :!(make %:r) && (./%:r) <CR>
+autocmd filetype cpp nmap <leader>z :!(make %:r) && (./%:r) <CR>
+autocmd filetype python nmap <leader>z :w <CR> :!python % <CR>
+autocmd filetype javascript nmap <leader>z :w <CR> :!node % <CR>
 
 " ************************| Debugging c/c++ |**************************** "
 
-autocmd filetype c nmap <leader>d :w <CR> :!(gcc -o %:r -g %) && (gdb %:r ; rm ./%:r) <CR>
-autocmd filetype cpp nmap <leader>d :w <CR> :!(g++ -o %:r -g %) && (gdb %:r ; rm ./%:r) <CR>
+autocmd filetype c nmap <leader>d :w <CR> :!(gcc -o %:r -g %) && (gdb %:r) <CR>
+autocmd filetype cpp nmap <leader>d :w <CR> :!(g++ -o %:r -g %) && (gdb %:r) <CR>
+
+" Autorun xrdb after modifying Xresources "
+autocmd BufWritePost *.Xresources :silent exec "!xrdb %"
