@@ -35,5 +35,4 @@
 #element selected {
     background-color: #31dab9;
     color: #292d3e;
-    font:  "Times New Roman bold 11";
 }
