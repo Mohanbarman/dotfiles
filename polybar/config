@@ -1,9 +1,9 @@
 [colors]
 background = ${xrdb:background:#222}
-#background = #002132
-background-alt = #5757da
-foreground = ${xrdb:color7:#222}
-#foreground = #dfdfdf
+#background = #323544
+background-alt = #17917a
+#foreground = ${xrdb:color7:#222}
+foreground = #fff
 foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
@@ -13,12 +13,8 @@ alert = #E6465F
 padding = 3
 
 [bar/mybar]
-;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 30
-;offset-x = 1%
-;offset-y = 1%
-#radius = 6.0
 fixed-center = true
 
 background = ${colors.background}
@@ -27,16 +23,13 @@ foreground = ${colors.foreground}
 line-size = 0
 line-color = #f00
 
-#border-size = 4
-#border-color = #00000000
-
 padding-left = 0
 padding-right = 0
 
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = noto-sans:size=10:weight=bold;2
+font-0 = noto-sans:size=9:weight=semibold:antialias=true;2
 font-1 = noto-sans:fontformat=truetype:size=20:antialias=true;0
 font-2 = fantasque:pixelsize=20;1
 font-3 = fantasque:size=11:weight=bold;2
@@ -48,9 +41,9 @@ modules-right = xkeyboard filesystem xbacklight pulseaudio memory cpu wlan batte
 
 tray-position = right
 tray-padding = ${measures.padding}
-;tray-background = #0063ff
+tray-background = ${colors.background-alt}
 
-;wm-restack = bspwm
+wm-restack = bspwm
 ;wm-restack = i3
 
 ;override-redirect = true
@@ -66,7 +59,7 @@ cursor-scroll = ns-resize
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = %title:0:40:...%
 label-padding = 3
 
 
@@ -92,7 +85,7 @@ interval = 25
 mount-0 = /
 
 label-mounted =  : %percentage_used%%
-label-mounted-foreground = #FFFFFF
+label-mounted-foreground = ${colors.foreground}
 label-mounted-background = ${colors.background-alt}
 label-mounted-padding = ${measures.padding}
 label-unmounted = %mountpoint% not mounted
@@ -107,17 +100,16 @@ label-focused-padding = 4
 
 label-occupied = %index%
 label-occupied-padding = 4
+label-occupied-foreground = #fff
 
-label-urgent = %index%!
+label-urgent = %index%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 4
 
 label-empty = %index%
-label-empty-foreground = ${colors.foreground-alt}
+label-empty-foreground = #3e4452
 label-empty-padding = 4
 
-; Separator in between workspaces
-; label-separator = |
 
 [module/i3]
 type = internal/i3
@@ -161,11 +153,11 @@ label-urgent-padding = 2
 type = internal/mpd
 format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
 
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
+;icon-prev = 
+;icon-stop = 
+;icon-play = 
+;icon-pause = 
+;icon-next = 
 
 label-song-maxlen = 25
 label-song-ellipsis = true
@@ -173,10 +165,10 @@ label-song-ellipsis = true
 [module/xbacklight]
 type = custom/script
 interval = 1
-exec = light
+exec = cat /sys/class/backlight/amdgpu_bl0/brightness
 
 format = <label> 
-label =   %output%
+label =  %output%
 label-background = ${colors.background-alt}
 label-padding = ${measures.padding}
 
@@ -196,25 +188,24 @@ label-padding = ${measures.padding}
 type = custom/script
 interval = 2
 exec = free -m | grep Mem | awk '{print $3}'
-label =  %output% MB
+label =   %output% MB
 label-background = ${colors.background-alt}
 label-padding = ${measures.padding}
 
 [module/wlan]
 type = internal/network
-interface = wlp1s0
+interface = wlan0
 interval = 1.0
 
 format-connected = <label-connected>
-label-connected =  %upspeed%    %downspeed%
+label-connected =   %upspeed%    %downspeed%
 label-connected-background = ${colors.background-alt}
 label-connected-padding = ${measures.padding}
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected = <label-disconnected>
+label-disconnected =   %upspeed%    %downspeed%
+label-disconnected-background = ${colors.background-alt}
+label-disconnected-padding = ${measures.padding}
 
 [module/eth]
 type = internal/network
@@ -234,13 +225,13 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
 date =
-date-alt = "%a, %d-%m-%Y"
+date-alt = "%a, %d-%m-%Y  - "
 
 time = %r
-time-alt = %H:%M:%S
+time-alt = %r
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
@@ -259,25 +250,10 @@ label-volume-padding = ${measures.padding}
 label-volume-background = ${colors.background-alt}
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
+label-muted = 🔇 Muted
+label-muted-padding = ${measures.padding}
 label-muted-foreground = #666
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/alsa]
 type = internal/alsa
@@ -324,8 +300,10 @@ label-discharging =   %percentage%%
 label-discharging-padding = ${measures.padding}
 label-discharging-background = ${colors.background-alt}
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
+format-full = <label-full>
+format-full-background = #3ACD3C
+label-full =   %percentage%%
+label-full-padding = ${measures.padding}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -347,12 +325,11 @@ animation-discharging-framerate = 750
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
-warn-temperature = 60
+warn-temperature = 50
 
 format = <label>
 format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
+format-warn = <label-warn>
 
 label =  %temperature-c%
 label-padding = ${measures.padding}
@@ -360,11 +337,6 @@ label-background = ${colors.background-alt}
 label-warn =  %temperature-c%
 label-warn-padding = ${measures.padding}
 label-warn-background = ${colors.alert}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
 
 [module/powermenu]
 type = custom/menu
@@ -404,7 +376,7 @@ screenchange-reload = true
 ;pseudo-transparency = false
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 0
+margin-bottom = 0
 
 ; vim:ft=dosini
