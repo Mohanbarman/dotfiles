@@ -1,9 +1,9 @@
 [colors]
 background = ${xrdb:background:#222}
 #background = #323544
-background-alt = #17917a
+background-alt = #30c0a5
 #foreground = ${xrdb:color7:#222}
-foreground = #fff
+foreground = #282a36
 foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
@@ -100,7 +100,8 @@ label-focused-padding = 4
 
 label-occupied = %index%
 label-occupied-padding = 4
-label-occupied-foreground = #fff
+label-occupied-foreground = #CECECE
+label-occupied-background = #3B3D4A
 
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
@@ -164,7 +165,7 @@ label-song-ellipsis = true
 
 [module/xbacklight]
 type = custom/script
-interval = 1
+interval = 10
 exec = cat /sys/class/backlight/amdgpu_bl0/brightness
 
 format = <label> 
@@ -179,14 +180,14 @@ card = amdgpu_bl0
 
 [module/cpu]
 type = internal/cpu
-interval = 2
+interval = 5
 label =   %percentage:2%%
 label-background = ${colors.background-alt}
 label-padding = ${measures.padding}
 
 [module/memory]
 type = custom/script
-interval = 2
+interval = 4
 exec = free -m | grep Mem | awk '{print $3}'
 label =   %output% MB
 label-background = ${colors.background-alt}
@@ -195,14 +196,14 @@ label-padding = ${measures.padding}
 [module/wlan]
 type = internal/network
 interface = wlan0
-interval = 1.0
+interval = 3
 
 format-connected = <label-connected>
-label-connected =   %upspeed%    %downspeed%
+label-connected =   %upspeed%    %downspeed%     %essid% 
 label-connected-background = ${colors.background-alt}
 label-connected-padding = ${measures.padding}
 
-format-disconnected = <label-disconnected>
+format-disconnected = 
 label-disconnected =   %upspeed%    %downspeed%
 label-disconnected-background = ${colors.background-alt}
 label-disconnected-padding = ${measures.padding}
@@ -225,10 +226,9 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 1
 
 date =
-date-alt = "%a, %d-%m-%Y  - "
+date-alt = "%a, %d-%b-%Y  - "
 
 time = %r
 time-alt = %r
