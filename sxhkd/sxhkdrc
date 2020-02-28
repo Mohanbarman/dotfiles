@@ -1,18 +1,34 @@
-#
-# wm independent hotkeys
-#
-
 # terminal emulator
 super + Return
 	termite
+
+# pdf reader.
+super + d
+  evince
+
+# telegram
+super + t
+  telegram-desktop
 
 # browser
 super + b
 	firefox
 
 # file manager
-super + t
-	thunar
+super + n
+  nemo
+
+# python console
+alt + p
+  termite -e python
+
+# ranger
+super + r
+  urxvt -e ranger
+
+# virtualbox
+super + v
+  virtualbox
 
 # pick color
 super + p
@@ -21,7 +37,7 @@ super + p
 
 # program launcher
 super + space
-	exec /home/mohan/MyScripts/menu
+  rofi -show drun -display-drun "" -dmenu-display-format "{name}"
 
 
 # make sxhkd reload its configuration files:
@@ -32,7 +48,7 @@ super + ctrl + shift + s
 # reload compton
 super + shift + ctrl + c
 	notify-send 'Reloading compton.';\
-	killall compton ; compton &
+	killall compton; compton&
 
 # reload polybar
 super + shift + ctrl + p
@@ -43,6 +59,11 @@ super + shift + ctrl + p
 super + shift + ctrl + d
 	notify-send 'Reloading notification system.';\
 	killall dunst; dunst &
+
+# reload xresources
+super + shift + ctrl + x
+  notify-send 'Reloading xresources';\
+  xrdb /home/mohan/.Xresources
 
 #
 # bspwm hotkeys
@@ -63,10 +84,6 @@ super + shift + period
     bspc node "$target_node" --to-desktop focused;        \
     bspc node "$target_node" --flag hidden=off
 
-# move current node to preselected node
-#super + y
-#	bspc node newest.marked.local -n newest.!automatic.local
-
 # quit/restart bspwm
 super + ctrl + shift + {q,b}
 	notify-send 'Restarting bspwm.';\
@@ -80,13 +97,6 @@ super + shift + q
 super + shift + m
 	bspc desktop -l next
 
-# Send focused node to another workspace
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,window -d} ^{1-9,10}
-
-# swap the current node and the biggest node
-super + g
-	bspc node -s biggest
 
 #
 # state/flags
@@ -96,10 +106,6 @@ super + g
 super + shift + {t,f,p}
 	bspc node -t {tiled,floating,pseudo_tiled}
 
-# set the node flags
-#super + ctrl + {m,x,y,z}
-#	bspc node -g {marked,locked,sticky,private}
-
 #
 # focus/swap
 #
@@ -108,31 +114,17 @@ super + shift + {t,f,p}
 super + {h,j,k,l}
 	bspc node --focus {west,south,north,east}
 
-# focus the node for the given path jump
-#super + {p,b,comma,period}
-#	bspc node -f @{parent,brother,first,second}
-
 # focus the next/previous node in the current desktop
-alt + {j,k}
+super + alt + {j,k}
 	bspc node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
-#super + bracket{left,right}
-#	bspc desktop -f {prev,next}.local
+super + alt + {h,l}
+	bspc desktop -f {prev,next}.local
 
-# focus the last node/desktop
-#super + {grave,Tab}
-#	bspc {node,desktop} -f last
-
-# focus the older or newer node in the focus history
-#super + {o,i}
-#	bspc wm -h off; \
-#	bspc node {older,newer} -f; \
-#	bspc wm -h on
-
-# focus or send to the given desktop
-super + {1-3}
-	bspc desktop -f '^{1-3,3}'
+# focus to the given desktop
+super + {1-5}
+	bspc desktop -f '^{1-5,5}'
 
 #
 # preselect
@@ -158,15 +150,9 @@ alt + ctrl + space
 # move/resize
 #
 
-# changing window gap
-#ctrl + {_, shift} + bracketleft
-#    bspc config -d focused top_padding $((`bspc config -d focused top_padding` {+,-} 20 ))
-
 # Change window gap
-ctrl + {j,k}
+ctrl + shift + {j,k}
     bspc config window_gap $((`bspc config window_gap` {+,-} 10 ))
-
-
 
 # expand a window by moving one of its side outward
 super + shift + {h,j,k,l}
@@ -178,7 +164,7 @@ shift + alt + {h,j,k,l}
 
 # move a floating window
 super + ctrl + {h,j,k,l}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+	bspc node -v {-10 0,0 10,0 -10,10 0}
 
 # rotate desktop
 super + r
@@ -196,17 +182,9 @@ super + shift + p
 super + f
 	bspc node --state \~fullscreen
 
-# Focus/swap windows by direction
-super + alt + {h,j,k,l}
-	bspc node --swap {west,south,north,east}
-
-# flip window horzontally/vertically
-super + shift + {Right,Down}
-	bspc node @/ --flip {vertical,horizontal}
-
-#
-# System shortcuts
-#
+####################
+# System shortcuts #
+####################
 
 # Restart wifi 
 super + alt + space 
@@ -222,8 +200,8 @@ XF86AudioLowerVolume
 	ponymix decrease 5
 
 # mute
-#XF86AudioMute
-#	volume mute
+XF86AudioMute
+	volume mute
 	
 # Brightness
 XF86MonBrightnessDown
@@ -234,9 +212,9 @@ XF86MonBrightnessUp
  
 # screenshot
 Print 
-	scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Screenshots/'
+	scrot '%Y-%m-%d-%k%M%S-scrot.png' -e 'mv $f ~/Screenshots/'
 
-# power
-XF86Sleep
-	i3lock -i /home/mohan/Downloads/walls/filtered-lock.png 
+# screenshot a specific part
+super + s
+  capture
 
