@@ -17,6 +17,8 @@ width = 100%
 height = 30
 fixed-center = true
 
+enable-ipc = true
+
 background = ${colors.background}
 foreground = ${colors.foreground}
 
@@ -35,27 +37,30 @@ font-2 = fantasque:pixelsize=20;1
 font-3 = fantasque:size=11:weight=bold;2
 font-4 = icomoon:size=11:antialias=true;3
 
-modules-left = bspwm xwindow 
+modules-left = bspwm xwindow
 modules-center = date
-modules-right = xkeyboard filesystem xbacklight pulseaudio memory cpu wlan battery temperature
+modules-right = xkeyboard brightness filesystem xbacklight pulseaudio memory cpu wlan battery temperature
 
 tray-position = right
 tray-padding = ${measures.padding}
 tray-background = ${colors.background-alt}
 
 wm-restack = bspwm
-;wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+[module/brightness]
+type = custom/ipc
+
+hook-0 = echo "$(cat /sys/class/backlight/amdgpu_bl0/brightness)/255 * 100" | bc -l | cut -d "." -f 1
+
+format =   <output>%
+format-foreground = ${colors.foreground}
+format-background = ${colors.background-alt}
+format-padding = 4
+
+initial = 1
 
 [module/xwindow]
 type = internal/xwindow
@@ -84,7 +89,7 @@ interval = 25
 
 mount-0 = /
 
-label-mounted =  : %percentage_used%%
+label-mounted =   %percentage_used%%
 label-mounted-foreground = ${colors.foreground}
 label-mounted-background = ${colors.background-alt}
 label-mounted-padding = ${measures.padding}
@@ -111,73 +116,6 @@ label-empty = %index%
 label-empty-foreground = #3e4452
 label-empty-padding = 4
 
-
-[module/i3]
-type = internal/i3
-format = <label-state> <label-mode>
-index-sort = true
-wrapping-scroll = false
-
-; Only show workspaces on the same output as the bar
-;pin-workspaces = true
-
-label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
-
-; focused = Active workspace on focused monitor
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
-label-focused-padding = 2
-
-; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%
-label-unfocused-padding = 2
-
-; visible = Active workspace on unfocused monitor
-label-visible = %index%
-label-visible-background = ${self.label-focused-background}
-label-visible-underline = ${self.label-focused-underline}
-label-visible-padding = ${self.label-focused-padding}
-
-; urgent = Workspace with urgency hint set
-label-urgent = %index%
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
-
-; Separator in between workspaces
-; label-separator = |
-
-
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-;icon-prev = 
-;icon-stop = 
-;icon-play = 
-;icon-pause = 
-;icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-[module/xbacklight]
-type = custom/script
-interval = 10
-exec = cat /sys/class/backlight/amdgpu_bl0/brightness
-
-format = <label> 
-label =  %output%
-label-background = ${colors.background-alt}
-label-padding = ${measures.padding}
-
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = amdgpu_bl0
-
 [module/cpu]
 type = internal/cpu
 interval = 5
@@ -199,14 +137,9 @@ interface = wlan0
 interval = 3
 
 format-connected = <label-connected>
-label-connected =   %upspeed%    %downspeed%     %essid% 
+label-connected =   %downspeed%    %upspeed%     %essid% 
 label-connected-background = ${colors.background-alt}
 label-connected-padding = ${measures.padding}
-
-format-disconnected = 
-label-disconnected =   %upspeed%    %downspeed%
-label-disconnected-background = ${colors.background-alt}
-label-disconnected-padding = ${measures.padding}
 
 [module/eth]
 type = internal/network
@@ -288,7 +221,7 @@ type = internal/battery
 battery = BAT0
 adapter = AC0
 full-at = 99
-interval = 0
+interval = 1
 
 format-charging = <label-charging>
 label-charging =   %percentage%%
@@ -304,23 +237,6 @@ format-full = <label-full>
 format-full-background = #3ACD3C
 label-full =   %percentage%%
 label-full-padding = ${measures.padding}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
-
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
@@ -338,45 +254,6 @@ label-warn =  %temperature-c%
 label-warn-padding = ${measures.padding}
 label-warn-background = ${colors.alert}
 
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
-
-[settings]
-screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
-;pseudo-transparency = false
-
 [global/wm]
 margin-top = 0
 margin-bottom = 0
-
-; vim:ft=dosini
