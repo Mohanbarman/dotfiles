@@ -205,10 +205,12 @@ XF86AudioMute
 	
 # Brightness
 XF86MonBrightnessDown
-	light -U 1 
+	light -U 2; \
+  polybar-msg -p $(pidof polybar) hook brightness 1
 
 XF86MonBrightnessUp
-	light -A 1
+	light -A 2; \
+  polybar-msg -p $(pidof polybar) hook brightness 1
  
 # screenshot
 Print 
