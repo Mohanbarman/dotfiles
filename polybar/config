@@ -14,7 +14,7 @@ padding = 3
 
 [bar/mybar]
 width = 100%
-height = 30
+height = 32
 fixed-center = true
 
 enable-ipc = true
@@ -22,24 +22,21 @@ enable-ipc = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 0
-line-color = #f00
-
 padding-left = 0
 padding-right = 0
 
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = noto-sans:size=9:weight=semibold:antialias=true;2
-font-1 = noto-sans:fontformat=truetype:size=20:antialias=true;0
-font-2 = fantasque:pixelsize=20;1
-font-3 = fantasque:size=11:weight=bold;2
+font-0 = Noto Sans:size=9:weight=semibold:antialias=true;2
+font-1 = Noto Sans:fontformat=truetype:size=20:antialias=true;0
+font-2 = Fantasque Sans Mono:pixelsize=20;1
+font-3 = Open Sans:size=11:weight=bold;2
 font-4 = icomoon:size=11:antialias=true;3
 
-modules-left = bspwm xwindow
+modules-left = timer bspwm xwindow 
 modules-center = date
-modules-right = xkeyboard brightness filesystem xbacklight pulseaudio memory cpu wlan battery temperature
+modules-right = xkeyboard brightness filesystem pulseaudio memory cpu wlan battery temperature 
 
 tray-position = right
 tray-padding = ${measures.padding}
@@ -49,6 +46,18 @@ wm-restack = bspwm
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+[module/timer]
+type = custom/ipc
+
+hook-0 = cat /tmp/timer.txt
+hook-1 = echo '' > /tmp/timer.txt
+
+format = <output>
+format-foreground = ${colors.foreground}
+format-background = ${colors.background-alt}
+format-padding = 3
+format-font = 4
 
 [module/brightness]
 type = custom/ipc
@@ -67,6 +76,7 @@ type = internal/xwindow
 label = %title:0:40:...%
 label-padding = 3
 
+label-foreground = #f7f7f1
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -167,7 +177,7 @@ time = %r
 time-alt = %r
 
 format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.background}
 
 label = %date% %time%
 label-font = 4
