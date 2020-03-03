@@ -1,3 +1,16 @@
+# Start timer 
+alt + t
+  /home/mohan/MyScripts/timer
+
+# Stop timer
+alt + r
+  killall timer ;\
+  polybar-msg -p $(pidof polybar) hook timer 2
+
+# Pause and resume timer
+alt + space
+  toogle-timer $(pidof timer)
+
 # terminal emulator
 super + Return
 	termite
@@ -6,17 +19,9 @@ super + Return
 super + d
   evince
 
-# telegram
-super + t
-  telegram-desktop
-
 # browser
 super + b
 	firefox
-
-# file manager
-super + n
-  nemo
 
 # python console
 alt + p
