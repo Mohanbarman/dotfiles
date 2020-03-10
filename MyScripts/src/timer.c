@@ -30,7 +30,7 @@ int main() {
   while (1) {
 
     t2 = time(NULL);
-    diff = t2 - t1 + 10000;
+    diff = t2 - t1;
 
     /* Calculate current time */
     gmtime_r(&diff, &timer);
