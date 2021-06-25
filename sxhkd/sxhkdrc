@@ -4,66 +4,61 @@ alt + t
 
 # Stop timer
 alt + r
-  killall timer ;\
+  killall timer; \
+  kill -CONT $(pidof timer); \
   polybar-msg -p $(pidof polybar) hook timer 2
 
 # Pause and resume timer
 alt + space
   toogle-timer $(pidof timer)
 
-# terminal emulator
+# Check network until internet connection gets back
+super + n
+  check-network
+
+# Applications
 super + Return
-	termite
+	urxvt
 
-# pdf reader.
-super + d
-  evince
+super + w
+  webstorm
 
-# browser
 super + b
-	firefox
+	brave
 
-# python console
-alt + p
-  termite -e python
-
-# ranger
-super + r
-  urxvt -e ranger
-
-# virtualbox
-super + v
-  virtualbox
-
-# pick color
 super + p
-	notify-send 'Pick a color.';\
-	xcolor | xsel -b
+  notify-send 'Pick a color.';\
+  xcolor | xsel -b
 
-# program launcher
+super + e
+  emoji-picker
+
 super + space
-  rofi -show drun -display-drun "" -dmenu-display-format "{name}"
+  rofi -show drun
+
+alt + c
+  code
 
 
 # make sxhkd reload its configuration files:
 super + ctrl + shift + s
-	notify-send 'Reloading sxhkd configuration.';\
-	pkill -USR1 -x sxhkd
+  notify-send 'Reloading sxhkd configuration.';\
+  pkill -USR1 -x sxhkd
 
 # reload compton
 super + shift + ctrl + c
-	notify-send 'Reloading compton.';\
-	killall compton; compton&
+  notify-send 'Reloading compton.';\
+  killall compton; compton&
 
 # reload polybar
 super + shift + ctrl + p
-	notify-send 'Reloading polybar.';\
-	killall polybar ; polybar mybar &
+  notify-send 'Reloading polybar.';\
+  killall polybar ; polybar mybar &
 
 # reload notification system
 super + shift + ctrl + d
-	notify-send 'Reloading notification system.';\
-	killall dunst; dunst &
+  notify-send 'Reloading notification system.';\
+  killall dunst; dunst &
 
 # reload xresources
 super + shift + ctrl + x
@@ -96,7 +91,7 @@ super + ctrl + shift + {q,b}
 
 # close and kill
 super + shift + q
-	bspc node -{c,k}
+	bspc node -c
 
 # alternate between the tiled and monocle layout
 super + shift + m
@@ -123,37 +118,31 @@ super + {h,j,k,l}
 super + alt + {j,k}
 	bspc node -f {next,prev}.local
 
+alt + Tab
+	bspc node -f next.local
+
 # focus the next/previous desktop in the current monitor
 super + alt + {h,l}
 	bspc desktop -f {prev,next}.local
 
 # focus to the given desktop
-super + {1-5}
-	bspc desktop -f '^{1-5,5}'
+super + {1-9}
+	bspc desktop -f '^{1-9,9}'
 
-#
-# preselect
-#
+super + 0
+  bspc desktop -f 10
 
 # preselect the direction
 alt + ctrl + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
-# preselect the ratio
-#super + ctrl + {1-9}
-#	bspc node -o 0.{1-9}
-
 # cancel the preselection for the focused node
 alt + ctrl + space
 	bspc node -p cancel
 
-# cancel the preselection for the focused desktop
-#super + ctrl + shift + space
-#	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
-
-#
-# move/resize
-#
+####################
+# System shortcuts #
+####################
 
 # Change window gap
 ctrl + shift + {j,k}
@@ -161,11 +150,11 @@ ctrl + shift + {j,k}
 
 # expand a window by moving one of its side outward
 super + shift + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+	bspc node -z {left -10 0,bottom 0 10,top 0 -10,right 20 0}
 
 # contract a window by moving one of its side inward
 shift + alt + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+	bspc node -z {right -10 0,top 0 10,bottom 0 -10,left 10 0}
 
 # move a floating window
 super + ctrl + {h,j,k,l}
@@ -187,9 +176,12 @@ super + shift + p
 super + f
 	bspc node --state \~fullscreen
 
-####################
-# System shortcuts #
-####################
+# move focued widow to diffrent workspace
+super + shift + {1-9}
+    id=$(bspc query -N -n); bspc node -d ^{1-9}
+
+super + shift + 0
+    id=$(bspc query -N -n); bspc node -d 10
 
 # Restart wifi 
 super + alt + space 
@@ -204,10 +196,10 @@ XF86AudioRaiseVolume
 XF86AudioLowerVolume
 	ponymix decrease 5
 
-# mute
-XF86AudioMute
-	volume mute
-	
+# Toggle mute
+alt + m
+	ponymix toggle
+
 # Brightness
 XF86MonBrightnessDown
 	light -U 2; \
@@ -225,3 +217,5 @@ Print
 super + s
   capture
 
+ctrl + alt + d
+  xrandr --output eDP --brightness 1

@@ -1,1 +1,2 @@
-rofi.theme: green.rasi
+#rofi.theme: menu.rasi
+rofi.theme: material.rasi
